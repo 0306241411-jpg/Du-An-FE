@@ -1,30 +1,46 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { AppContext } from './AppContext';
 
 function PrivateNotes() {
-  // Lấy dữ liệu an toàn từ Context (tránh bị crash nếu dữ liệu bị undefined)
-  const context = useContext(AppContext);
-  const notes = context?.notes || [];
-  const profile = context?.profile || {};
-  const deleteNote = context?.deleteNote || (() => {});
+  const { privateNotes, fetchPrivateNotes, deletePrivateNote, showToast } = useContext(AppContext);
 
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [passInput, setPassInput] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [topic, setTopic] = useState('hoc-tap');
 
-  // Kiểm tra Mật khẩu
-  const handleUnlock = (e) => {
+  const API_URL = 'http://localhost:5000/api';
+
+  // Tự động gọi API lấy dữ liệu ghi chú riêng tư ngay khi người dùng mở khóa
+  useEffect(() => {
+    if (isUnlocked) {
+      fetchPrivateNotes();
+    }
+  }, [isUnlocked]);
+
+  // Xử lý mở khóa bằng mật khẩu
+  const handleUnlock = async (e) => {
     e.preventDefault();
-    const correctPass = profile.privatePass || '1234';
-    if (passInput === correctPass) {
-      setIsUnlocked(true);
-    } else {
-      alert('Sai Private-Pass! (Mật khẩu mặc định: 1234)');
+    try {
+      const res = await fetch(`${API_URL}/private/auth`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: passInput }),
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        setIsUnlocked(true);
+        if (showToast) showToast('Đã mở khóa không gian riêng tư!', 'success');
+      } else {
+        alert(data.message || 'Sai Private-Pass!');
+      }
+    } catch (error) {
+      alert('Lỗi kết nối máy chủ xác thực!');
     }
   };
 
-  // Màn hình khóa
+  // Màn hình nhập mật khẩu
   if (!isUnlocked) {
     return (
       <div style={styles.card}>
@@ -49,14 +65,13 @@ function PrivateNotes() {
     );
   }
 
-  // Lọc dữ liệu an toàn
-  const filteredNotes = notes.filter((note) => {
+  // Lọc dữ liệu theo chủ đề và từ khóa tìm kiếm
+  const filteredNotes = (privateNotes || []).filter((note) => {
     if (!note) return false;
-    const isPrivate = note.type === 'private';
-    const matchTopic = note.topic === topic;
+    const matchTopic = note.topic ? note.topic === topic : true;
     const noteTitle = note.title || '';
     const matchSearch = noteTitle.toLowerCase().includes((searchTerm || '').toLowerCase());
-    return isPrivate && matchTopic && matchSearch;
+    return matchTopic && matchSearch;
   });
 
   return (
@@ -66,7 +81,7 @@ function PrivateNotes() {
       <div style={styles.searchBox}>
         <span style={{ marginRight: '6px' }}>🔍</span>
         <input
-          placeholder="Tìm kiếm"
+          placeholder="Tìm kiếm..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           style={styles.searchInput}
@@ -85,14 +100,16 @@ function PrivateNotes() {
       <div style={styles.noteList}>
         {filteredNotes.length === 0 ? (
           <p style={{ textAlign: 'center', fontSize: '12px', color: '#888' }}>
-            Chưa có ghi chú riêng tư nào.
+            Chưa có ghi chú riêng tư nào thuộc chủ đề này.
           </p>
         ) : (
           filteredNotes.map((note) => (
             <div key={note.id || Math.random()} style={styles.noteCard}>
               <div style={{ fontWeight: 'bold' }}>🔒 {note.title}</div>
               <div style={{ fontSize: '11px', color: '#555', marginTop: '4px' }}>{note.content}</div>
-              <button onClick={() => deleteNote(note.id)} style={styles.deleteBtn}>Xóa</button>
+              <button onClick={() => deletePrivateNote(note.id)} style={styles.deleteBtn}>
+                Xóa
+              </button>
             </div>
           ))
         )}

@@ -1,22 +1,33 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { AppContext } from './AppContext';
 
 function Dashboard() {
   const context = useContext(AppContext);
   const notes = context?.notes || [];
+  const fetchNotesByTopic = context?.fetchNotesByTopic || (() => {});
   const deleteNote = context?.deleteNote || (() => {});
 
   const [searchTerm, setSearchTerm] = useState('');
   const [topic, setTopic] = useState('hoc-tap');
 
-  // Lọc ghi chú Công khai theo Chủ đề và Từ khóa tìm kiếm
+  // 1. Tự động gọi API lấy ghi chú mới từ Backend mỗi khi người dùng thay đổi Chủ đề (topic)
+  useEffect(() => {
+    fetchNotesByTopic(topic);
+  }, [topic]);
+
+  // 2. LỌC CHỈ LẤY GHI CHÚ CÔNG KHAI (!note.isPrivate) VÀ THEO TỪ KHÓA TÌM KIẾM
   const filteredNotes = notes.filter((note) => {
     if (!note) return false;
-    const isPublic = note.type === 'public';
-    const matchTopic = note.topic === topic;
-    const matchSearch = (note.title || '').toLowerCase().includes(searchTerm.toLowerCase());
-    return isPublic && matchTopic && matchSearch;
+    const isPublic = !note.isPrivate; // Kiểm tra chỉ lấy note Công khai
+    const noteTitle = note.title || '';
+    const matchSearch = noteTitle.toLowerCase().includes((searchTerm || '').toLowerCase());
+    return isPublic && matchSearch;
   });
+
+  // 3. Xử lý xóa ghi chú
+  const handleDelete = (id) => {
+    deleteNote(id, topic);
+  };
 
   return (
     <div style={styles.card}>
@@ -54,7 +65,7 @@ function Dashboard() {
             <div key={note.id || Math.random()} style={styles.noteCard}>
               <div style={{ fontWeight: 'bold' }}>📌 {note.title}</div>
               <div style={{ fontSize: '11px', color: '#555', marginTop: '4px' }}>{note.content}</div>
-              <button onClick={() => deleteNote(note.id)} style={styles.deleteBtn}>Xóa</button>
+              <button onClick={() => handleDelete(note.id)} style={styles.deleteBtn}>Xóa</button>
             </div>
           ))
         )}

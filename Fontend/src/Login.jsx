@@ -1,24 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from './AppContext';
 
 function Login({ onLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  // Lấy thông báo Toast từ Context nếu có
+  const context = useContext(AppContext);
+  const showToast = context?.showToast;
+
+  const API_URL = 'http://localhost:5000/api';
+
+  // Xử lý Đăng nhập qua API Backend
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (username.trim()) {
-      if (onLogin) onLogin(username);
-      navigate('/'); // Đăng nhập xong tự động chuyển về Trang chủ
-    } else {
-      alert('Vui lòng nhập Username!');
+
+    // 1. Kiểm tra đầu vào rỗng
+    if (!username.trim() || !password.trim()) {
+      if (showToast) showToast('Vui lòng nhập đầy đủ Username và Password!', 'error');
+      else alert('Vui lòng nhập đầy đủ Username và Password!');
+      return;
+    }
+
+    try {
+      // 2. Gọi API lấy thông tin profile từ Backend
+      const res = await fetch(`${API_URL}/profile`);
+      if (res.ok) {
+        const profileData = await res.json();
+
+        // Lấy tên người dùng chuẩn từ profile.json (displayName hoặc username)
+        const validUsername = profileData.displayName || profileData.username;
+
+        // 3. Đối chiếu CẢ Username VÀ Password
+        const isUsernameValid = username.trim().toLowerCase() === (validUsername || '').toLowerCase();
+        const isPasswordValid = password === profileData.password;
+
+        if (isUsernameValid && isPasswordValid) {
+          if (onLogin) onLogin(validUsername);
+          if (showToast) showToast('Đăng nhập thành công!', 'success');
+          navigate('/'); // Chuyển sang Trang chủ
+        } else {
+          // Báo lỗi chung để bảo mật tài khoản
+          if (showToast) showToast('Tài khoản hoặc mật khẩu không chính xác!', 'error');
+          else alert('Tài khoản hoặc mật khẩu không chính xác!');
+        }
+      } else {
+        alert('Lỗi máy chủ không thể xác thực!');
+      }
+    } catch (error) {
+      console.error('Lỗi đăng nhập:', error);
+      alert('Không thể kết nối đến máy chủ Backend!');
     }
   };
 
   return (
     <div style={styles.card}>
-      {/* Logo hình tròn */}
       <div style={styles.logoContainer}>
         <div style={styles.logo}>Logo</div>
       </div>

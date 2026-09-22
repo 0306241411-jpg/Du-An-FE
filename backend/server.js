@@ -99,20 +99,22 @@ app.post('/api/notes', (req, res) => {
 app.put('/api/notes/:topic/:id', (req, res) => {
   const filePath = getFilePath(req.params.topic);
   try {
-    if (!fs.existsSync(filePath)) return res.status(404).json({ message: "File không tồn tại" });
+    if (!fs.existsSync(filePath)) return res.status(404).json({ message: "File chủ đề không tồn tại" });
     let notes = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-    const index = notes.findIndex(n => n.id === req.params.id);
+    
+    // Ép kiểu String() khi so sánh id
+    const index = notes.findIndex(n => String(n.id) === String(req.params.id));
 
     if (index !== -1) {
-      notes[index].title = req.body.title;
-      notes[index].content = req.body.content;
+      notes[index].title = req.body.title ?? notes[index].title;
+      notes[index].content = req.body.content ?? notes[index].content;
       notes[index].updatedAt = new Date().toISOString();
       fs.writeFileSync(filePath, JSON.stringify(notes, null, 2), 'utf8');
-      return res.json({ success: true, message: "Đã sửa thành công" });
+      return res.json({ success: true, message: "Đã sửa ghi chú công khai thành công!" });
     }
-    res.status(404).json({ message: "Không tìm thấy ghi chú" });
+    res.status(404).json({ message: "Không tìm thấy ghi chú công khai" });
   } catch (error) {
-    res.status(500).json({ message: "Lỗi cập nhật ghi chú" });
+    res.status(500).json({ message: "Lỗi cập nhật ghi chú công khai" });
   }
 });
 
@@ -122,7 +124,9 @@ app.delete('/api/notes/:topic/:id', (req, res) => {
   try {
     if (!fs.existsSync(filePath)) return res.status(404).json({ message: "File không tồn tại" });
     let notes = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-    const newNotes = notes.filter(n => n.id !== req.params.id);
+    
+    // Ép kiểu String() khi lọc xóa
+    const newNotes = notes.filter(n => String(n.id) !== String(req.params.id));
     fs.writeFileSync(filePath, JSON.stringify(newNotes, null, 2), 'utf8');
     res.json({ success: true, message: "Đã xóa thành công" });
   } catch (error) {
@@ -147,7 +151,7 @@ app.post('/api/private/auth', (req, res) => {
   }
 });
 
-// 🟢 BỔ SUNG: Lấy danh sách ghi chú riêng tư từ private.json (Giải quyết lỗi 404)
+// Lấy danh sách ghi chú riêng tư từ private.json 
 app.get('/api/private/notes', (req, res) => {
   try {
     if (!fs.existsSync(privateNotesFile)) return res.json([]);
@@ -158,12 +162,36 @@ app.get('/api/private/notes', (req, res) => {
   }
 });
 
+// Sửa ghi chú riêng tư trong private.json
+app.put('/api/private/notes/:id', (req, res) => {
+  try {
+    if (!fs.existsSync(privateNotesFile)) return res.status(404).json({ message: "Không tìm thấy file" });
+    let notes = JSON.parse(fs.readFileSync(privateNotesFile, 'utf8'));
+
+    // Ép kiểu String() khi so sánh id
+    const index = notes.findIndex(n => String(n.id) === String(req.params.id));
+
+    if (index !== -1) {
+      notes[index].title = req.body.title ?? notes[index].title;
+      notes[index].content = req.body.content ?? notes[index].content;
+      notes[index].updatedAt = new Date().toISOString();
+      fs.writeFileSync(privateNotesFile, JSON.stringify(notes, null, 2), 'utf8');
+      return res.json({ success: true, message: "Đã sửa ghi chú riêng tư thành công!" });
+    }
+    res.status(404).json({ message: "Không tìm thấy ghi chú riêng tư" });
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi cập nhật ghi chú riêng tư" });
+  }
+});
+
 // Xóa ghi chú riêng tư trong private.json
 app.delete('/api/private/notes/:id', (req, res) => {
   try {
     if (!fs.existsSync(privateNotesFile)) return res.status(404).json({ message: "Không tìm thấy file" });
     let notes = JSON.parse(fs.readFileSync(privateNotesFile, 'utf8'));
-    const filtered = notes.filter(n => n.id !== req.params.id);
+    
+    // Ép kiểu String() khi lọc xóa
+    const filtered = notes.filter(n => String(n.id) !== String(req.params.id));
     fs.writeFileSync(privateNotesFile, JSON.stringify(filtered, null, 2), 'utf8');
     res.json({ success: true, message: "Đã xóa ghi chú riêng tư" });
   } catch (error) {

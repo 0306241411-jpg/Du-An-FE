@@ -121,6 +121,42 @@ export function AppProvider({ children }) {
     }
   };
 
+  // Cập nhật ghi chú công khai
+  const updateNote = async (id, topic, updatedData) => {
+    try {
+      const res = await fetch(`${API_URL}/notes/${topic}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedData),
+      });
+
+      if (res.ok) {
+        await fetchNotesByTopic(topic);
+        showToast('Đã cập nhật ghi chú!', 'success');
+      }
+    } catch (error) {
+      showToast('Lỗi cập nhật ghi chú!', 'error');
+    }
+  };
+
+  // 🟢 MỚI BỔ SUNG: Cập nhật ghi chú riêng tư
+  const updatePrivateNote = async (id, updatedData) => {
+    try {
+      const res = await fetch(`${API_URL}/private/notes/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedData),
+      });
+
+      if (res.ok) {
+        await fetchPrivateNotes();
+        showToast('Đã cập nhật ghi chú riêng tư!', 'success');
+      }
+    } catch (error) {
+      showToast('Lỗi cập nhật ghi chú riêng tư!', 'error');
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -132,6 +168,8 @@ export function AppProvider({ children }) {
         fetchNotesByTopic,
         fetchPrivateNotes,
         addNote,
+        updateNote,
+        updatePrivateNote, // 👈 Thêm vào Provider
         deleteNote,
         deletePrivateNote,
         showToast,

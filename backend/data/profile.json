@@ -1,5 +1,15 @@
 {
+  "0": {
+    "displayName": "Sinh viên A",
+    "theme": "light",
+    "password": "abc"
+  },
+  "1": {
+    "displayName": "Sinh viên B",
+    "theme": "dark",
+    "password": "xyz"
+  },
   "displayName": "Sinh viên A",
-  "theme": "light",
-  "password": "abc"
+  "password": "abc",
+  "theme": "light"
 }

@@ -1,30 +1,37 @@
 [
   {
-    "id": "1790086750455",
-    "title": "Học tập",
-    "content": "Học tập rất là vui nha",
+    "id": "1",
+    "title": "Front-End",
+    "content": "Ghi chú về kiến thức HTML, CSS, JavaScript và ReactJS",
     "createdAt": "2026-09-22T14:19:10.455Z",
     "updatedAt": "2026-09-22T14:19:21.775Z"
   },
   {
-    "id": "1790087622755",
-    "title": "Ngữ Văn",
-    "content": "Ghi chú của ngữ văn á nha\n",
+    "id": "2",
+    "title": "Laravel",
+    "content": "Ghi chú về PHP Framework Laravel, Eloquent ORM và RESTful API",
     "createdAt": "2026-09-22T14:33:42.755Z",
     "updatedAt": "2026-09-22T14:33:42.755Z"
   },
   {
-    "id": "1790087634239",
-    "title": "Tin học",
-    "content": "Ghi chú này là của tin học",
+    "id": "3",
+    "title": "ASP.NET Core",
+    "content": "Ghi chú về lập trình C#, ASP.NET Core Web API và Entity Framework",
     "createdAt": "2026-09-22T14:33:54.239Z",
     "updatedAt": "2026-09-22T14:33:54.239Z"
   },
   {
-    "id": "1790165911362",
-    "title": "tien",
-    "content": "123",
+    "id": "4",
+    "title": "Kiểm thử phần mềm",
+    "content": "Ghi chú về quy trình kiểm thử, Unit Test, Integration Test và Automation Testing",
     "createdAt": "2026-09-23T12:18:31.362Z",
     "updatedAt": "2026-09-23T12:18:31.362Z"
+  },
+  {
+    "id": "5",
+    "title": "Công nghệ phần mềm",
+    "content": "Ghi chú về quy trình Agile/Scrum, thiết kế kiến trúc hệ thống và sơ đồ UML",
+    "createdAt": "2026-09-23T12:20:00.000Z",
+    "updatedAt": "2026-09-23T12:20:00.000Z"
   }
 ]

@@ -1,12 +1,7 @@
 import { useState, useEffect } from "react";
 
 function PrivateNotes() {
-  /* ==========================================================
-   | VÙNG 1: KHỞI TẠO STATE
-   | - isUnlocked: cờ đã mở khóa hay chưa (bị reset về false
-   |   mỗi khi component render lại / F5 trang -> đúng yêu cầu
-   |   "bảo mật FE" trong tài liệu)
-   ========================================================== */
+
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [password, setPassword] = useState("");
   const [notes, setNotes] = useState([]);
@@ -19,9 +14,6 @@ function PrivateNotes() {
 
   const API_BASE = "http://localhost:5000/api/private";
 
-  /* ==========================================================
-   | VÙNG 2: XÁC THỰC (Auth) — gọi API thật, KHÔNG hardcode pass
-   ========================================================== */
   const handleUnlock = (e) => {
     e.preventDefault();
 
@@ -43,16 +35,13 @@ function PrivateNotes() {
       .catch((err) => console.error("Lỗi xác thực:", err));
   };
 
-  // Khóa lại thủ công
+
   const handleLock = () => {
     setIsUnlocked(false);
     setNotes([]);
     setFormData({ id: null, title: "", content: "" });
   };
 
-  /* ==========================================================
-   | VÙNG 3: CRUD GHI CHÚ RIÊNG TƯ (chỉ gọi khi đã mở khóa)
-   ========================================================== */
   const fetchPrivateNotes = () => {
     setLoading(true);
     fetch(`${API_BASE}/notes`)
@@ -104,7 +93,7 @@ function PrivateNotes() {
   };
 
   const handleDelete = (id) => {
-    if (!window.confirm("Bạn có chắc muốn xóa ghi chú bí mật này?")) return;
+    if (!window.confirm("Bạn có chắc muốn xóa ghi chú riêng tư này?")) return;
 
     fetch(`${API_BASE}/notes/${id}`, { method: "DELETE" })
       .then((res) => res.json())
@@ -112,11 +101,6 @@ function PrivateNotes() {
       .catch((err) => console.error("Lỗi xóa ghi chú riêng tư:", err));
   };
 
-  /* ==========================================================
-   | VÙNG 4: GIAO DIỆN
-   ========================================================== */
-
-  // 1. Màn hình khóa khi chưa mở
   if (!isUnlocked) {
     return (
       <div
@@ -126,7 +110,7 @@ function PrivateNotes() {
         <h2
           style={{ marginBottom: "12px", fontSize: "20px", color: "#1e1b4b" }}
         >
-          🔒 Vùng Kín Bảo Mật
+          🔒 Ghi chú riêng tư
         </h2>
         <p style={{ marginBottom: "20px", color: "#64748b", fontSize: "14px" }}>
           Vui lòng nhập mật khẩu để truy cập
@@ -148,7 +132,6 @@ function PrivateNotes() {
     );
   }
 
-  // 2. Màn hình sau khi mở khóa thành công
   return (
     <div>
       <div
@@ -160,23 +143,22 @@ function PrivateNotes() {
         }}
       >
         <h1 className="page-title" style={{ margin: 0 }}>
-          Ghi chú Vùng Kín 🔒
+          Ghi chú riêng tư 🔒
         </h1>
         <button className="btn btn-danger" onClick={handleLock}>
           Khóa lại
         </button>
       </div>
 
-      {/* Form Thêm mới / Sửa ghi chú riêng tư */}
       <div className="card">
         <h3 className="card-title">
-          {formData.id ? "Sửa ghi chú bí mật" : "Thêm ghi chú bí mật mới"}
+          {formData.id ? "Sửa ghi chú riêng tư" : "Thêm ghi chú riêng tư mới"}
         </h3>
         <form onSubmit={handleSave}>
           <div className="form-group">
             <input
               type="text"
-              placeholder="Tiêu đề bí mật..."
+              placeholder="Tiêu đề riêng tư..."
               value={formData.title}
               onChange={(e) =>
                 setFormData({ ...formData, title: e.target.value })
@@ -186,7 +168,7 @@ function PrivateNotes() {
           <div className="form-group">
             <textarea
               rows="3"
-              placeholder="Nội dung bí mật..."
+              placeholder="Nội dung riêng tư..."
               value={formData.content}
               onChange={(e) =>
                 setFormData({ ...formData, content: e.target.value })
@@ -208,14 +190,13 @@ function PrivateNotes() {
           )}
         </form>
       </div>
-
-      {/* Danh sách ghi chú riêng tư */}
-      <h3 className="card-title">Danh sách ghi chú bí mật</h3>
+      
+      <h3 className="card-title">Danh sách ghi chú riêng tư</h3>
       {loading ? (
         <p style={{ color: "#94a3b8" }}>Đang tải...</p>
       ) : notes.length === 0 ? (
         <p style={{ color: "#94a3b8", fontStyle: "italic" }}>
-          Chưa có ghi chú bí mật nào.
+          Chưa có ghi chú riêng tư nào.
         </p>
       ) : (
         <div className="notes-grid">

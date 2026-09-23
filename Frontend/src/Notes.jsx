@@ -1,13 +1,6 @@
 import { useState, useEffect } from "react";
 
 function Notes() {
-  /* ==========================================================
-   | VÙNG 1: KHỞI TẠO STATE (Trạng thái dữ liệu)
-   | - topic: chủ đề đang chọn (quyết định gọi API nào)
-   | - notes: danh sách ghi chú của chủ đề hiện tại
-   | - formData: dữ liệu form (id=null nghĩa là đang THÊM MỚI,
-   |   id có giá trị nghĩa là đang SỬA ghi chú đó)
-   ========================================================== */
   const [topic, setTopic] = useState("hoc-tap");
   const [notes, setNotes] = useState([]);
   const [formData, setFormData] = useState({
@@ -17,14 +10,10 @@ function Notes() {
   });
   const [loading, setLoading] = useState(false);
 
-  /* ==========================================================
-   | VÙNG 2: GỌI API (Fetch, Add, Edit, Delete)
-   | Lưu ý: API đổi theo :topic trên URL, đúng thiết kế BE
-   | trong tài liệu (app.get/post/put/delete '/api/notes/:topic')
-   ========================================================== */
+
   const API_BASE = "http://localhost:5000/api/notes";
 
-  // Lấy danh sách ghi chú theo chủ đề đang chọn
+ 
   const fetchNotes = () => {
     setLoading(true);
     fetch(`${API_BASE}/${topic}`)
@@ -34,12 +23,11 @@ function Notes() {
       .finally(() => setLoading(false));
   };
 
-  // Mỗi khi đổi chủ đề (topic) -> tự động gọi lại API tương ứng
+
   useEffect(() => {
     fetchNotes();
   }, [topic]);
 
-  // Xử lý Thêm mới / Cập nhật (dùng chung 1 hàm)
   const handleSave = (e) => {
     e.preventDefault();
     if (!formData.title.trim() || !formData.content.trim()) {
@@ -63,23 +51,22 @@ function Notes() {
     })
       .then((res) => res.json())
       .then(() => {
-        fetchNotes(); // Làm mới danh sách sau khi lưu
-        setFormData({ id: null, title: "", content: "" }); // Reset form
+        fetchNotes(); 
+        setFormData({ id: null, title: "", content: "" });
       })
       .catch((err) => console.error("Lỗi lưu ghi chú:", err));
   };
 
-  // Đổ dữ liệu cũ ra form khi bấm nút "Sửa"
+ 
   const handleEdit = (note) => {
     setFormData({ id: note.id, title: note.title, content: note.content });
   };
 
-  // Hủy sửa, quay về trạng thái thêm mới
+ 
   const handleCancelEdit = () => {
     setFormData({ id: null, title: "", content: "" });
   };
 
-  // Xóa ghi chú (có xác nhận trước khi xóa)
   const handleDelete = (id) => {
     if (!window.confirm("Bạn có chắc muốn xóa ghi chú này?")) return;
 
@@ -89,14 +76,11 @@ function Notes() {
       .catch((err) => console.error("Lỗi xóa ghi chú:", err));
   };
 
-  /* ==========================================================
-   | VÙNG 3: GIAO DIỆN (Render JSX)
-   ========================================================== */
+
   return (
     <div>
       <h1 className="page-title">Ghi chú Công khai</h1>
 
-      {/* Chọn chủ đề: đổi topic sẽ tự động gọi lại API /api/notes/:topic */}
       <div className="card">
         <div className="form-group">
           <label className="form-label">Chủ đề:</label>
@@ -108,7 +92,6 @@ function Notes() {
         </div>
       </div>
 
-      {/* Form Thêm mới / Sửa ghi chú (dùng chung 1 form) */}
       <div className="card">
         <h3 className="card-title">
           {formData.id ? "Sửa ghi chú" : "Thêm ghi chú mới"}
@@ -150,7 +133,7 @@ function Notes() {
         </form>
       </div>
 
-      {/* Danh sách ghi chú dạng lưới (Grid) */}
+  
       <h3 className="card-title">Danh sách ghi chú</h3>
       {loading ? (
         <p style={{ color: "#94a3b8" }}>Đang tải...</p>

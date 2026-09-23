@@ -1,14 +1,14 @@
 const express = require("express");
-// import express from 'express';
 const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
 const app = express();
-app.use(cors()); // Cho phép FE gọi API
-app.use(express.json()); // Đọc dữ liệu JSON từ FE gửi lên
+
+app.use(cors()); 
+app.use(express.json()); 
 const profilePath = path.join(__dirname, "data", "profile.json");
 
-// API 1: Đọc thông tin Profile
+
 app.get("/api/profile", (req, res) => {
   try {
     const rawData = fs.readFileSync(profilePath, "utf8");
@@ -19,11 +19,10 @@ app.get("/api/profile", (req, res) => {
   }
 });
 
-// API 2: Cập nhật Profile
+
 app.put("/api/profile", (req, res) => {
   try {
     const newProfile = req.body;
-    // Ghi đè dữ liệu mới vào file
     fs.writeFileSync(profilePath, JSON.stringify(newProfile, null, 2), "utf8");
     res.json({ success: true, message: "Đã cập nhật Profile" });
   } catch (error) {
@@ -32,13 +31,12 @@ app.put("/api/profile", (req, res) => {
 });
 
 const notesDir = path.join(__dirname, "data", "notes");
-// Khởi tạo thư mục tự động nếu chưa tồn tại
 if (!fs.existsSync(notesDir)) {
   fs.mkdirSync(notesDir, { recursive: true });
 }
 const getFilePath = (topic) => path.join(notesDir, `${topic}.json`);
 
-// 1. Lấy danh sách ghi chú (GET)
+
 app.get("/api/notes/:topic", (req, res) => {
   const filePath = getFilePath(req.params.topic);
   try {
@@ -50,7 +48,7 @@ app.get("/api/notes/:topic", (req, res) => {
   }
 });
 
-// 2. Thêm mới ghi chú (POST)
+
 app.post("/api/notes/:topic", (req, res) => {
   const filePath = getFilePath(req.params.topic);
   try {
@@ -72,7 +70,7 @@ app.post("/api/notes/:topic", (req, res) => {
   }
 });
 
-// 3. Sửa ghi chú (PUT)
+
 app.put("/api/notes/:topic/:id", (req, res) => {
   const filePath = getFilePath(req.params.topic);
   try {
@@ -105,16 +103,15 @@ app.delete("/api/notes/:topic/:id", (req, res) => {
 });
 
 const privateNotesFile = path.join(__dirname, "data", "private.json");
-// Khởi tạo file private.json nếu chưa tồn tại
+
 if (!fs.existsSync(privateNotesFile)) {
   fs.writeFileSync(privateNotesFile, "[]", "utf8");
 }
 
-// 1. API Xác thực mật khẩu
+
 app.post("/api/private/auth", (req, res) => {
   try {
     const profile = JSON.parse(fs.readFileSync(profilePath, "utf8"));
-    // Kiểm tra pass truyền lên có khớp với pass trong profile không
     if (profile.password === req.body.password) {
       res.json({ success: true });
     } else {
@@ -125,7 +122,7 @@ app.post("/api/private/auth", (req, res) => {
   }
 });
 
-// 2. API Lấy danh sách Ghi chú riêng tư
+
 app.get("/api/private/notes", (req, res) => {
   try {
     const data = fs.readFileSync(privateNotesFile, "utf8");
@@ -180,7 +177,6 @@ app.put("/api/private/notes/:id", (req, res) => {
   }
 });
 
-//5 API Xóa Ghi chú riêng tư (DELETE)
 app.delete("/api/private/notes/:id", (req, res) => {
   try {
     let notes = JSON.parse(fs.readFileSync(privateNotesFile, "utf8"));
@@ -201,4 +197,4 @@ const PORT = 5000;
 app.listen(PORT, () =>
   console.log(`Backend chạy tại http://localhost:${PORT}/`),
 );
-//123
+

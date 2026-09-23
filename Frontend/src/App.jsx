@@ -7,10 +7,10 @@ function App() {
   return (
     <div className="app-container">
       <div className="sidebar">
-        <h2 className="sidebar-title">📝 NoteApp</h2>
+        <h2 className="sidebar-title">📝 Hệ Thống Quản Lý Ghi Chú</h2>
         <nav className="sidebar-nav">
           <Link to="/" className="sidebar-link">Ghi chú</Link>
-          <Link to="/private" className="sidebar-link">Vùng kín</Link>
+          <Link to="/private" className="sidebar-link">Ghi chú riêng tư</Link>
           <Link to="/settings" className="sidebar-link">Cài đặt</Link>
         </nav>
       </div>

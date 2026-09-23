@@ -1,15 +1,15 @@
 [
   {
     "id": "1790086867210",
-    "title": "Ghi chú bí mật",
-    "content": "Không ai được xem nha mấy ba",
+    "title": "Ghi chú bảo mật tài khoản",
+    "content": "Lưu trữ danh sách tài khoản, mật khẩu ứng dụng và mã phục hồi hai yếu tố (2FA).",
     "createdAt": "2026-09-22T14:21:07.210Z",
     "updatedAt": "2026-09-22T14:21:07.210Z"
   },
   {
     "id": "1790125701247",
-    "title": "đây là ghi chú bí mật",
-    "content": "nhaaaa",
+    "title": "Ghi chú tài chính riêng tư",
+    "content": "Thông tin quản lý ngân sách cá nhân, tài khoản ngân hàng và kế hoạch đầu tư dài hạn.",
     "createdAt": "2026-09-23T01:08:21.247Z",
     "updatedAt": "2026-09-23T01:08:21.247Z"
   }

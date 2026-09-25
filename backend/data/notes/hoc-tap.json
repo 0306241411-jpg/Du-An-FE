@@ -2,36 +2,51 @@
   {
     "id": "1",
     "title": "Front-End",
-    "content": "Ghi chú về kiến thức HTML, CSS, JavaScript và ReactJS",
-    "createdAt": "2026-09-22T14:19:10.455Z",
-    "updatedAt": "2026-09-22T14:19:21.775Z"
+    "content": "Ghi chú về kiến thức HTML5, CSS3, JavaScript ES6+, React.js và tối ưu hóa giao diện người dùng (UI/UX)",
+    "isDeleted": false,
+    "createdAt": "2026-09-25T14:00:00.000Z",
+    "updatedAt": "2026-09-25T14:00:00.000Z"
   },
   {
     "id": "2",
-    "title": "Laravel",
-    "content": "Ghi chú về PHP Framework Laravel, Eloquent ORM và RESTful API",
-    "createdAt": "2026-09-22T14:33:42.755Z",
-    "updatedAt": "2026-09-22T14:33:42.755Z"
+    "title": "ASP.NET Core",
+    "content": "Ghi chú về lập trình C#, ASP.NET Core Web API, Entity Framework Core và kiến trúc Repository Pattern",
+    "isDeleted": false,
+    "createdAt": "2026-09-25T14:05:00.000Z",
+    "updatedAt": "2026-09-25T14:05:00.000Z"
   },
   {
     "id": "3",
-    "title": "ASP.NET Core",
-    "content": "Ghi chú về lập trình C#, ASP.NET Core Web API và Entity Framework",
-    "createdAt": "2026-09-22T14:33:54.239Z",
-    "updatedAt": "2026-09-22T14:33:54.239Z"
+    "title": "Laravel",
+    "content": "Ghi chú về PHP Framework Laravel, Eloquent ORM, Middleware, Blade Template và thiết kế RESTful API",
+    "isDeleted": false,
+    "createdAt": "2026-09-25T14:10:00.000Z",
+    "updatedAt": "2026-09-25T14:10:00.000Z"
   },
   {
     "id": "4",
     "title": "Kiểm thử phần mềm",
-    "content": "Ghi chú về quy trình kiểm thử, Unit Test, Integration Test và Automation Testing",
-    "createdAt": "2026-09-23T12:18:31.362Z",
-    "updatedAt": "2026-09-23T12:18:31.362Z"
+    "content": "Ghi chú về quy trình lập Test Plan, thiết kế Test Case, kỹ thuật kiểm thử hộp đen, hộp trắng và báo cáo/quản lý lỗi (Bug Report)",
+    "isDeleted": false,
+    "createdAt": "2026-09-25T14:15:00.000Z",
+    "updatedAt": "2026-09-25T14:15:00.000Z"
   },
   {
     "id": "5",
     "title": "Công nghệ phần mềm",
-    "content": "Ghi chú về quy trình Agile/Scrum, thiết kế kiến trúc hệ thống và sơ đồ UML",
-    "createdAt": "2026-09-23T12:20:00.000Z",
-    "updatedAt": "2026-09-23T12:20:00.000Z"
+    "content": "Ghi chú về quy trình phát triển Agile/Scrum, phân tích yêu cầu phần mềm, thiết kế kiến trúc hệ thống và vẽ sơ đồ UML",
+    "isDeleted": false,
+    "createdAt": "2026-09-25T14:20:00.000Z",
+    "updatedAt": "2026-09-25T14:20:00.000Z",
+    "deletedAt": "2026-09-25T07:16:17.317Z"
+  },
+  {
+    "id": "6",
+    "title": "Tiếng Anh chuyên ngành IT",
+    "content": "Ghi chú về từ vựng phần cứng/phần mềm, thuật ngữ lập trình, mạng máy tính, cơ sở dữ liệu và đọc hiểu tài liệu kỹ thuật IT",
+    "isDeleted": false,
+    "createdAt": "2026-09-25T14:25:00.000Z",
+    "updatedAt": "2026-09-25T14:25:00.000Z"
   }
+
 ]

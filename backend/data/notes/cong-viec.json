@@ -3,7 +3,48 @@
     "id": "1",
     "title": "Ghi chú công việc",
     "content": "Lên kế hoạch phân công công việc, hoàn thiện báo cáo đồ án và kiểm thử chức năng hệ thống.",
+    "isDeleted": false,
     "createdAt": "2026-09-22T14:24:20.895Z",
     "updatedAt": "2026-09-22T14:24:20.895Z"
+  },
+  {
+    "id": "2",
+    "title": "Họp Sprint Planning & Phân công công việc",
+    "content": "Thảo luận yêu cầu tính năng mới, ước lượng thời gian (estimation) và phân chia công việc cho các thành viên trong Sprint 3.",
+    "isDeleted": false,
+    "createdAt": "2026-09-23T08:30:00.000Z",
+    "updatedAt": "2026-09-23T08:30:00.000Z"
+  },
+  {
+    "id": "3",
+    "title": "Review Code & Tối ưu hóa API",
+    "content": "Kiểm tra các Pull Request từ nhóm Frontend, refactor các API xử lý chậm và viết tài liệu Swagger cho API mới.",
+    "isDeleted": false,
+    "createdAt": "2026-09-24T10:15:00.000Z",
+    "updatedAt": "2026-09-24T10:15:00.000Z"
+  },
+  {
+    "id": "4",
+    "title": "Triển khai hệ thống lên Staging",
+    "content": "Cấu hình môi trường Docker, kiểm tra kết nối Database production-like và chạy regression test trước khi release.",
+    "isDeleted": false,
+    "createdAt": "2026-09-25T09:00:00.000Z",
+    "updatedAt": "2026-09-25T09:00:00.000Z"
+  },
+  {
+    "id": "5",
+    "title": "Xử lý Bug Report & Feedback khách hàng",
+    "content": "Tiếp nhận log lỗi từ bộ phận Support, khắc phục sự cố tràn bộ nhớ khi tải file lớn và cập nhật bản hotfix.",
+    "isDeleted": false,
+    "createdAt": "2026-09-25T11:20:00.000Z",
+    "updatedAt": "2026-09-25T11:20:00.000Z"
+  },
+  {
+    "id": "6",
+    "title": "Báo cáo tiến độ & Viết tài liệu hướng dẫn",
+    "content": "Tổng hợp kết quả hoàn thành trong tuần, cập nhật file User Guide cho khách hàng và nộp báo cáo công việc cho PM.",
+    "isDeleted": false,
+    "createdAt": "2026-09-25T13:45:00.000Z",
+    "updatedAt": "2026-09-25T13:45:00.000Z"
   }
 ]

@@ -3,7 +3,48 @@
     "id": "1",
     "title": "Ghi chú cá nhân",
     "content": "Lưu trữ thông tin cá nhân, mục tiêu phát triển bản thân và danh sách công việc cần làm hàng ngày.",
+    "isDeleted": false,
     "createdAt": "2026-09-22T14:24:54.514Z",
     "updatedAt": "2026-09-22T14:24:54.514Z"
+  },
+  {
+    "id": "2",
+    "title": "Mục tiêu phát triển bản thân năm 2026",
+    "content": "Cải thiện kỹ năng Tiếng Anh chuyên ngành IT, hoàn thành đồ án tốt nghiệp đúng hạn, tập thể dục 30 phút mỗi ngày và đọc ít nhất 12 cuốn sách.",
+    "isDeleted": false,
+    "createdAt": "2026-09-23T07:00:00.000Z",
+    "updatedAt": "2026-09-23T07:00:00.000Z"
+  },
+  {
+    "id": "3",
+    "title": "Lịch trình tập luyện & Sức khỏe",
+    "content": "Duy trì chạy bộ 3km vào các sáng Thứ 2 - Thứ 4 - Thứ 6. Hạn chế thức khuya sau 11h đêm và uống đủ 2 lít nước mỗi ngày.",
+    "isDeleted": false,
+    "createdAt": "2026-09-24T09:30:00.000Z",
+    "updatedAt": "2026-09-24T09:30:00.000Z"
+  },
+  {
+    "id": "4",
+    "title": "Danh sách sách chuyên ngành & Kỹ năng cần đọc",
+    "content": "1. Clean Code (Robert C. Martin)\n2. Atomic Habits (James Clear)\n3. Refactoring UI (Adam Wathan)\n4. Designing Data-Intensive Applications.",
+    "isDeleted": false,
+    "createdAt": "2026-09-24T15:00:00.000Z",
+    "updatedAt": "2026-09-24T15:00:00.000Z"
+  },
+  {
+    "id": "5",
+    "title": "Kế hoạch quản lý tài chính cá nhân",
+    "content": "Phân bổ thu nhập hàng tháng: 50% Chi tiêu thiết yếu, 20% Tiết kiệm dài hạn, 15% Đầu tư học tập/Khóa học, 10% Giải trí cá nhân, 5% Quỹ dự phòng.",
+    "isDeleted": false,
+    "createdAt": "2026-09-25T08:15:00.000Z",
+    "updatedAt": "2026-09-25T08:15:00.000Z"
+  },
+  {
+    "id": "6",
+    "title": "Danh sách thiết bị & Đồ dùng cần mua",
+    "content": "Nâng cấp thanh RAM 16GB cho laptop, mua giá đỡ tản nhiệt, chuẩn bị tài liệu đăng ký thi chứng chỉ và mua đồ dùng chuẩn bị dã ngoại cuối tuần.",
+    "isDeleted": false,
+    "createdAt": "2026-09-25T10:45:00.000Z",
+    "updatedAt": "2026-09-25T10:45:00.000Z"
   }
 ]
